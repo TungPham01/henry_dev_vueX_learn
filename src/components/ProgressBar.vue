@@ -1,0 +1,20 @@
+<template>
+  <p class="progress-bar">Progress: {{ progress }}%</p>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  name: "ProgressBarComponent",
+  computed: mapGetters(["progress"]),
+};
+</script>
+
+<style>
+.progress-bar {
+  padding: 5px;
+  text-align: center;
+  background: rgb(106, 248, 118);
+  color: black;
+}
+</style>
