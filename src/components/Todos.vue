@@ -1,7 +1,7 @@
 <template>
   <div class="todo-list">
     <TodoForm />
-    <ul v-if="auth.isAuthenticated">
+    <ul v-if="isAuthenticated">
       <li
         v-for="todo in todos"
         :key="todo.id"
@@ -18,14 +18,16 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 import TodoForm from './TodoForm';
 export default {
   name: "TodosComponent",
   components: {
     TodoForm
   },
-  computed: mapState(["todos", "auth"]),
+  computed: {
+    ...mapGetters(["isAuthenticated", "todos"]),
+  },
   created() {
     this.getTodos()
   },
