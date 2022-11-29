@@ -1,5 +1,6 @@
 <template>
   <div class="todo-list">
+    <TodoForm />
     <ul v-if="auth.isAuthenticated">
       <li
         v-for="todo in todos"
@@ -9,6 +10,7 @@
       >
         {{ todo.title }}
         <input type="checkbox" :checked="todo.completed" />
+        <button @click="deleteTodo(todo.id)">Delete</button>
       </li>
     </ul>
     <p v-else style="text-align: center">Không được truy cập</p>
@@ -16,11 +18,24 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
+import TodoForm from './TodoForm';
 export default {
   name: "TodosComponent",
+  components: {
+    TodoForm
+  },
   computed: mapState(["todos", "auth"]),
-  methods: mapMutations(['MARK_COMPLETE'])
+  created() {
+    this.getTodos()
+  },
+  methods: {
+    ...mapMutations(['MARK_COMPLETE']),
+    ...mapActions(['deleteTodo', 'getTodos']),
+    // deleteTodo(todoId) {
+    //   this.$store.dispatch('deleteTodo', todoId)
+    // }
+  }
 };
 </script>
 
